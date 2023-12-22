@@ -1,24 +1,25 @@
-#include <stdlib.h>
-#include "hash_tables.h"
+#ifndef HASH_TABLES_H
+#define HASH_TABLES_H
 
-hash_table_t *hash_table_create(unsigned long int size)
+/**
+ * struct hash_node_s - Node of a hash table
+*/
+typedef struct hash_node_s
 {
-    hash_table_t *ht;
-    unsigned long int i;
+    char *key;
+    char *value;
+    struct hash_node_s *next;
+} hash_node_t;
 
-    ht = malloc(sizeof(hash_table_t));
-    if (ht == NULL)
-        return (NULL);
+/** 
+ * struct hash_table_s - Hash table data structure
+*/
+typedef struct hash_table_s
+{
+    unsigned long int size;
+    hash_node_t **array;
+} hash_table_t;
 
-    ht->size = size;
-    ht->array = malloc(sizeof(hash_node_t *) * size);
-    if (ht->array == NULL) 
-    {
-        free(ht);
-        return (NULL);
-    }
-    for (i = 0; i < size; i++)
-        ht->array[i] = NULL;
+hash_table_t *hash_table_create(unsigned long int size);
 
-    return (ht);
-}
+#endif /* HASH_TABLES_H */
